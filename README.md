@@ -37,7 +37,6 @@ Tool per crittografare un singolo file utilizzando Java Cryptographic Extension 
 
 6. Se intendi crittografare più file, considera di creare una cartella compressa utilizzando formati come zip, rar o 7z.
 
-Queste istruzioni forniscono una guida chiara sull'utilizzo dell'applicazione mantenendo un tono professionale.
 
 
 
