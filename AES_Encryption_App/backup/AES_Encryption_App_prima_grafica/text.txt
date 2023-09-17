@@ -1,0 +1,49 @@
+/*
+ AES.encrypt(key, inputFile, inputFile); // Sovrascrive il file originale con il file criptato
+ AES.decrypt(key, inputFile, inputFile); // Decifra il file direttamente
+ File encryptedFile = new File("src/in.enc"); // Specifica l'estensione .enc per il file criptato
+import java.io.File;
+import java.util.Scanner;
+
+public class App {
+    public static void main(String[] args) {
+    	File inputFile = new File("src/in.png");
+    	File encryptedFile = new File("src/in_2.enc");
+    	Scanner input = new Scanner(System.in);
+    	System.out.println("Inserire la password ");
+    	String key = input.nextLine();
+        key = AES.generateKeyFromPassword(key);
+        
+        
+        //do while..
+        System.out.println("Inserire la modalità ");
+        int mode = input.nextInt();
+       
+        if (mode == 1) {
+        	
+        	try {
+        		AES.encrypt(key, inputFile, encryptedFile);
+            } catch (CryptoException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        	System.out.println("Encryption complete");
+        } else {
+        	try {
+        		AES.decrypt(key, inputFile, encryptedFile);
+            } catch (CryptoException ex) {
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+            }
+            System.out.println("Decryption complete");
+        	
+        }
+        input.close();
+    
+    
+    
+    
+    
+    
+    }
+}
