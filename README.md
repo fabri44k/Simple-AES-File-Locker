@@ -19,7 +19,7 @@ Simple tool to encrypt a single file using the Java Cryptographic Extension (JCE
 6. If you intend to encrypt multiple files, consider creating a compressed folder using formats such as zip, rar, or 7z.
 
 Requires Java Runtime Environment v1.4.0 or a more recent version.
-With large file this tool may not work.
+
 
 🇮🇹
 Semplice strumento per crittografare/decrittografare un singolo file
@@ -40,7 +40,7 @@ Tool per crittografare un singolo file utilizzando Java Cryptographic Extension 
 6. Se intendi crittografare più file, considera di creare una cartella compressa utilizzando formati come zip, rar o 7z.
 
 Richiede Java Runtime Environment v1.4.0 o una versione più recente.
-Con file di grandi dimensioni, questo tool potrebbe non funzionare.
+
 
 Video:
 

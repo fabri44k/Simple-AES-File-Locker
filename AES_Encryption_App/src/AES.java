@@ -21,7 +21,7 @@ public class AES {
 	
 	private static final String ALGORITHM = "AES";
 	private static final String TRANSFORMATION = "AES";
-
+	
 	public static void encrypt(String key, File inputFile, File outputFile) throws CryptoException {
 		doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
 	}
@@ -31,29 +31,33 @@ public class AES {
 	}
 
 	private static void doCrypto(int cipherMode, String key, File inputFile, File outputFile) throws CryptoException {
-		try {
-			Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
-			Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-			cipher.init(cipherMode, secretKey);
-			
-			FileInputStream inputStream = new FileInputStream(inputFile);
-			byte[] inputBytes = new byte[(int) inputFile.length()];
-			inputStream.read(inputBytes);
-			
-			byte[] outputBytes = cipher.doFinal(inputBytes);
-			
-			FileOutputStream outputStream = new FileOutputStream(outputFile);
-			outputStream.write(outputBytes);
-			
-			inputStream.close();
-			outputStream.close();
-			
-		} catch (NoSuchPaddingException | NoSuchAlgorithmException
-				| InvalidKeyException | BadPaddingException
-				| IllegalBlockSizeException | IOException ex) {
-			throw new CryptoException("Error encrypting/decrypting file", ex);
-		}
+	    try {
+	        Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
+	        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+	        cipher.init(cipherMode, secretKey);
+
+	        FileInputStream inputStream = new FileInputStream(inputFile);
+	        FileOutputStream outputStream = new FileOutputStream(outputFile);
+	        
+	        byte[] inputBytes = new byte[1024];
+	        int bytesRead;
+	        while ((bytesRead = inputStream.read(inputBytes)) != -1) {
+	            byte[] outputBytes = cipher.update(inputBytes, 0, bytesRead);
+	            outputStream.write(outputBytes);
+	        }
+
+	        byte[] outputBytes = cipher.doFinal();
+	        outputStream.write(outputBytes);
+
+	        inputStream.close();
+	        outputStream.close();
+	    } catch (NoSuchPaddingException | NoSuchAlgorithmException
+	            | InvalidKeyException | BadPaddingException
+	            | IllegalBlockSizeException | IOException ex) {
+	        throw new CryptoException("Errore durante la cifratura/decifratura del file", ex);
+	    }
 	}
+
 	
 	public static String generateKeyFromPassword(String password) {
 		String salt = "A.sf78[kL78_lop_&ky?Hf1*kLx>5h-HJcE34°gLkP3zT7wR9sYvQ8x";

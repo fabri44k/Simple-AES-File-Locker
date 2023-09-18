@@ -15,15 +15,15 @@ public class App extends JFrame {
     private final static Color DECRYPT_BUTTON_COLOR = Color.decode("#e9a017");
     private final static Color ENCRYPT_BUTTON_COLOR = Color.decode("#00FF7F");
     private final static Color ADD_NEW_FILE_BUTTON_COLOR = Color.decode("#9cc0e7");
-
+    private final static int MIN_PASSWORD_LENGTH = 8;
     private String key;
     private File inputFile;
     private File outputFile;
-
+    
     public App() {
         ActionListener listener = new ActionListenerImpl();
         setTitle("File Encryption App");
-        setSize(400, 300);
+        setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));
@@ -58,7 +58,8 @@ public class App extends JFrame {
         public void actionPerformed(ActionEvent event) {
 
             if (event.getSource() == browseButton) {
-                FileDialog fileDialog = new FileDialog(new Frame(), "Choose a File", FileDialog.LOAD);
+            	
+            	FileDialog fileDialog = new FileDialog(new Frame(), "Choose a File", FileDialog.LOAD);
                 fileDialog.setVisible(true);
                 String directory = fileDialog.getDirectory();
                 String file = fileDialog.getFile();
@@ -85,7 +86,7 @@ public class App extends JFrame {
                             encryptButton.setEnabled(false);
                             decryptButton.setEnabled(false);
                             return;
-                        } else if (key.isEmpty() || key.length() < 8) {
+                        } else if (key.isEmpty() || key.length() < MIN_PASSWORD_LENGTH) {
                             logArea.setText("");
                             logArea.setText("Invalid key. Please try again.");
                         } else {
@@ -109,7 +110,7 @@ public class App extends JFrame {
                 try {
                     AES.encrypt(key, inputFile, outputFile);
                     logArea.setText("");
-                    logArea.setText("Encryption completed. \n Path->" + outputFile.getAbsolutePath() + LOCK_EMOJI);
+                    logArea.setText("ENCRYPTION COMPLETED. \n Path->" + outputFile.getAbsolutePath() + LOCK_EMOJI);
                 } catch (CryptoException ex) {
                     logArea.setText("");
                     logArea.setText("Error during encryption");
@@ -131,7 +132,7 @@ public class App extends JFrame {
                     try {
                         AES.decrypt(key, inputFile, outputFile);
                         logArea.setText("");
-                        logArea.setText("Decrypted file created: \n" + outputFile.getAbsolutePath());
+                        logArea.setText("DECRYPTED FILE CREATED: \n" + outputFile.getAbsolutePath());
                     } catch (CryptoException ex) {
                         logArea.setText("");
                         logArea.setText("Error! Incorrect key. Please try again.");
@@ -149,10 +150,10 @@ public class App extends JFrame {
             }
         }
     }
-
+  
     public static void main(String[] args) {
         JFrame frame = new App();
-        frame.setMinimumSize(new Dimension(120, 170));
+        frame.setMinimumSize(new Dimension(120, 250));
         frame.setLocationRelativeTo(null);
     }
 }
