@@ -79,14 +79,35 @@ public class App extends JFrame {
 
                     boolean keyValid = false;
                     do {
-                        key = JOptionPane.showInputDialog("Enter the password for your file (minimum 8 characters)", "");
-                        if (key == null) {
+                        JPanel panel = new JPanel();
+                        JPasswordField passwordField = new JPasswordField(20);
+                        JCheckBox showPasswordCheckbox = new JCheckBox("Show Password");
+                        showPasswordCheckbox.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e ){
+                            if (showPasswordCheckbox.isSelected()) {
+                                passwordField.setEchoChar((char)0) ;
+                            } else {
+                                passwordField.setEchoChar('*') ;
+                            }
+                            }
+                        });
+                        panel.add(new JLabel("Enter the password for your file (minimum 8 characters):"));
+                        panel.add(passwordField);
+                        panel.add(showPasswordCheckbox);
+    
+                        int option = JOptionPane.showConfirmDialog(null, panel, "Choose your password",JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    
+                        if (option == JOptionPane.CANCEL_OPTION) {
                             logArea.setText("");
                             logArea.setText("Input canceled. Reselect the file.");
                             encryptButton.setEnabled(false);
                             decryptButton.setEnabled(false);
                             return;
-                        } else if (key.isEmpty() || key.length() < MIN_PASSWORD_LENGTH) {
+                        }
+    
+                        char[] passwordChars = passwordField.getPassword();
+                        key = new String(passwordChars);
+                        if (key.isEmpty() || key.length() < MIN_PASSWORD_LENGTH) {
                             logArea.setText("");
                             logArea.setText("Invalid key. Please try again.");
                         } else {
