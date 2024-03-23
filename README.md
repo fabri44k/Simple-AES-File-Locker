@@ -44,4 +44,4 @@ Richiede Java Runtime Environment v1.4.0 o una versione più recente.
 
 Video:
 
-https://streamable.com/53z9lm
+(https://drive.google.com/file/d/1jM1VnFCtFCB1fqAfJxcnA194GQKgxNaE/view?usp=drive_link)https://drive.google.com/file/d/1jM1VnFCtFCB1fqAfJxcnA194GQKgxNaE/view?usp=drive_link
